@@ -1,4 +1,5 @@
 -- 오른쪽 cmd, alt 키맵핑
+-- 라이브러리 받아야 함. https://github.com/hetima/hammerspoon-foundation_remapping
 local FRemap = require('foundation_remapping')
 local remapper = FRemap.new()
 remapper:remap('rcmd', 'f18'):remap('ralt', 'f19')
@@ -48,6 +49,13 @@ hyperMode:bind({'alt'}, 'h', keyStroke({'alt'},'Left'), nil, keyStroke({'alt'},'
 hyperMode:bind({'alt'}, 'l', keyStroke({'alt'},'Right'), nil, keyStroke({'alt'},"Right"))
 hyperMode:bind({'alt'}, 'k', keyStroke({'alt'},'Up'), nil, keyStroke({'alt'},'Up'))
 hyperMode:bind({'alt'}, 'j',keyStroke({'alt'},'Down'), nil, keyStroke({'alt'},'Down'))
+-- cmd + arrow 맵핑
+hyperMode:bind({'cmd'}, 'h', keyStroke({'cmd'},'Left'), nil, keyStroke({'cmd'},'Left'))
+hyperMode:bind({'cmd'}, 'l', keyStroke({'cmd'},'Right'), nil, keyStroke({'cmd'},"Right"))
+hyperMode:bind({'cmd'}, 'k', keyStroke({'cmd'},'Up'), nil, keyStroke({'cmd'},'Up'))
+hyperMode:bind({'cmd'}, 'j',keyStroke({'cmd'},'Down'), nil, keyStroke({'cmd'},'Down'))
+
+
 -- 해머스푼 리로드 맵핑
 hyperMode:bind({}, 'r', hs.reload)
 
