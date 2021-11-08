@@ -39,6 +39,12 @@ end
 -- 해머스푼 리로드
 function relad() hs.relad() end
 
+--bootstrap
+function bootstrap()
+  hs.hotkey.bind(nil, 'f18', toggleMode)
+  showAlert('Hello world!')
+end
+
 -- arrow 맵핑
 hyperMode:bind({}, 'h', keyStroke({},'Left'), nil, keyStroke({},'Left'))
 hyperMode:bind({}, 'l', keyStroke({},'Right'), nil, keyStroke({},"Right"))
@@ -54,15 +60,7 @@ hyperMode:bind({'cmd'}, 'h', keyStroke({'cmd'},'Left'), nil, keyStroke({'cmd'},'
 hyperMode:bind({'cmd'}, 'l', keyStroke({'cmd'},'Right'), nil, keyStroke({'cmd'},"Right"))
 hyperMode:bind({'cmd'}, 'k', keyStroke({'cmd'},'Up'), nil, keyStroke({'cmd'},'Up'))
 hyperMode:bind({'cmd'}, 'j',keyStroke({'cmd'},'Down'), nil, keyStroke({'cmd'},'Down'))
-
-
 -- 해머스푼 리로드 맵핑
 hyperMode:bind({}, 'r', hs.reload)
-
-
-function bootstrap()
-  hs.hotkey.bind(nil, 'f18', toggleMode)
-  showAlert('Hello world!')
-end
 
 bootstrap()
