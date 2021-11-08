@@ -1,7 +1,15 @@
--- 오른쪽 cmd, alt 키맵핑
--- 라이브러리 받아야 함. https://github.com/hetima/hammerspoon-foundation_remapping
+--[[ 
+  FRemap      : 키맵핑 라이브러리 (https://github.com/hetima/hammerspoon-foundation_remapping)
+  remapper    : 키맵핑 인스턴스
+  delay       : mac 입력 기본 지연 시간
+  isHyperMode : 하이퍼 모드 여부
+ ]]
 local FRemap = require('foundation_remapping')
 local remapper = FRemap.new()
+local delay = hs.eventtap.keyRepeatDelay()
+local isHyperMode = false
+
+-- 오른쪽 cmd, alt 키맵핑
 remapper:remap('rcmd', 'f18'):remap('ralt', 'f19')
 remapper:register()
 
@@ -19,7 +27,6 @@ end
 function closeAlert() hs.alert.closeAll() end
 
 -- 하이퍼 모드 모달
-local isHyperMode = false
 hyperMode = hs.hotkey.modal.new()
 function hyperMode:entered() showAlert('Hyper mode ON', true) isHyperMode = true end
 function hyperMode:exited() showAlert('Hyper mode OFF', false) isHyperMode = false  end
@@ -29,17 +36,15 @@ function toggleMode()
   if isHyperMode then closeAlert() hyperMode:exit() else hyperMode:enter() end
 end
 
-
 -- 키 이벤트
-local delay = hs.eventtap.keyRepeatDelay()
 function keyStroke(mode, key)
   return function() hs.eventtap.keyStroke(mode, key, delay) end
 end
 
--- 해머스푼 리로드
+-- 해머스푼 설정 새로고침
 function relad() hs.relad() end
 
---bootstrap
+-- bootstrap
 function bootstrap()
   hs.hotkey.bind(nil, 'f18', toggleMode)
   showAlert('Hello world!')
