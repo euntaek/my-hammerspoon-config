@@ -4,10 +4,10 @@
   delay       : mac 입력 기본 지연 시간
   isHyperMode : 하이퍼 모드 여부
  ]]
-local FRemap = require('foundation_remapping')
-local remapper = FRemap.new()
-local delay = hs.eventtap.keyRepeatDelay()
-local isHyperMode = false
+FRemap = require('foundation_remapping')
+remapper = FRemap.new()
+delay = hs.eventtap.keyRepeatDelay()
+isHyperMode = false
 
 -- 오른쪽 cmd, alt 키맵핑
 remapper:remap('rcmd', 'f18'):remap('ralt', 'f19')
@@ -36,7 +36,7 @@ function toggleMode()
   if isHyperMode then closeAlert() hyperMode:exit() else hyperMode:enter() end
 end
 
--- 키 이벤트
+-- 키 입력 이벤트
 function keyStroke(mode, key)
   return function() hs.eventtap.keyStroke(mode, key, delay) end
 end
@@ -44,11 +44,28 @@ end
 -- 해머스푼 설정 새로고침
 function relad() hs.relad() end
 
+-- 토글 말고 눌렀을 때 모드 활성 때면 비활성
+function keyEventHandler (event)
+  local keyCode = event:getKeyCode()
+  local type = event:getType()
+  if keyCode ~= 79 then return end
+  if type == 10 and not isHyperMode then toggleMode()
+  elseif type == 11 and isHyperMode then toggleMode()
+  end
+end
+
+keyEventtap = hs.eventtap.new({ 
+  hs.eventtap.event.types.keyDown,
+  hs.eventtap.event.types.keyUp,
+}, keyEventHandler)
+
 -- bootstrap
 function bootstrap()
-  hs.hotkey.bind(nil, 'f18', toggleMode)
+  -- hs.hotkey.bind(nil, 'f18', toggleMode)
+  keyEventtap:start()
   showAlert('Hello world!')
 end
+
 
 -- arrow 맵핑
 hyperMode:bind({}, 'h', keyStroke({},'Left'), nil, keyStroke({},'Left'))
